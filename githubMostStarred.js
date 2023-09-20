@@ -14,7 +14,7 @@ class MyCLIApp extends CLIApp {
 
     // check if dates were passed
     if (args.length >= 2) {
-      // TODO: potentially add some date validation
+      // TODO: add some date validation
       this.startDate = args[0];
       this.endDate = args[1];
     }
