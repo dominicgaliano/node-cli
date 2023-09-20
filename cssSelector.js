@@ -3,13 +3,13 @@ const CLIApp = require("./CLIApp");
 class MyCLIApp extends CLIApp {
   constructor() {
     super();
-    this.expectedArgs = ["URL", "CSS Selector"];
+    this.expectedArgs = ["URL", "CSS-Selector(s)"];
   }
 
   parseArgs(args) {
     // check that an arg is given
     if (args.length < 2) {
-      throw new Error(`2 args required`);
+      throw new Error(`Min 2 args required`);
     }
 
     // check if help was requested
