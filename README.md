@@ -35,4 +35,12 @@ node cssSelector.js https://example.com .title .description
 # Returns all elements with className .title and .description returned by http://example.com
 ```
 
-###
+## Installation
+
+To install this project locally, follow the following commands (npm required):
+
+```sh
+git clone https://github.com/dominicgaliano/node-cli.git
+cd node-cli/
+npm i
+```
