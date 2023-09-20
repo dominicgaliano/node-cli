@@ -1,42 +1,41 @@
-const path = require("path");
-const fs = require("fs").promises;
+const CLIApp = require("./CLIApp");
 
-function main() {
-  // parse args
-  const args = process.argv;
-
-  // validate correct number of arguments
-  if (args.length < 3) {
-    displayError("No target specified");
-    return;
+class MyCLIApp extends CLIApp {
+  constructor() {
+    super();
+    this.expectedArgs = ["filepath"];
   }
 
-  // parse input
-  const userInput = args[2];
-  if (userInput === "-h" || userInput == "--help") {
-    displayHelp();
-    return;
+  parseArgs(args) {
+    // check that an arg is given
+    if (args.length < 1) {
+      throw new Error(`No arguments given`);
+    }
+
+    // check if help was requested
+    if (args[0] === "-h" || args[0] === "--help") {
+      throw new Error();
+    }
+
+    // set path argument
+    this.filePath = args[0];
   }
 
-  readFileAsync(userInput);
-}
+  async execute() {
+    await this.readFileAsync(this.filePath);
+  }
 
-async function readFileAsync(relativePath) {
-  try {
-    const data = await fs.readFile(relativePath, "utf-8");
-    console.log(data);
-  } catch (err) {
-    displayError(err);
+  async readFileAsync(relativePath) {
+    const fs = require("fs").promises;
+    try {
+      const data = await fs.readFile(relativePath, "utf-8");
+      console.log(data);
+    } catch (err) {
+      throw new Error(`Error reading file: ${err.message}`);
+    }
   }
 }
 
-function displayError(errorText) {
-  console.log(errorText);
-  displayHelp();
-}
-
-function displayHelp() {
-  console.log(`Usage: node ${path.basename(__filename)} /file-path`);
-}
-
-main();
+// Create an instance of your CLI app and run it
+const myApp = new MyCLIApp();
+myApp.run();
