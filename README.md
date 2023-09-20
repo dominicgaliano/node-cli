@@ -21,7 +21,7 @@ node readFile /path/to/input.txt   # Reads file at /path/to/input.txt
 node writefile FILE_PATH STRING1 [STRING2] ...
 
 # Example:
-node writeFile output.txt Hello World! # Outputs Hello World! to ./output.txt
+node writeFile output.txt Hello World # Outputs Hello World to ./output.txt
 
 ```
 
