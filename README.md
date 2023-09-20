@@ -38,10 +38,17 @@ node cssSelector.js https://example.com .title .description
 ### githubMostStarred.js
 
 ```sh
-node githubMostStarred.js [DATE1] [DATE2]
+node githubMostStarred.js DATE1 DATE2
 
 # Example
-node githubMostStarred.js
+node githubMostStarred.js 2023-09-01 2023-10-19
+# Output:
+# #1
+# hyperdx
+# Resolve production issues, fast. An open source observability platform unifying session replays, logs, metrics, traces and errors.
+# https://github.com/hyperdxio/hyperdx
+# Stars: 2621
+# ...
 ```
 
 ## Installation
