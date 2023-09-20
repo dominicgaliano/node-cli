@@ -16,6 +16,8 @@ I created this project to practice and learn more about [Node.js](https://nodejs
 
 ### readFile.js
 
+Read utf-8 encoded text from file
+
 ```sh
 node readFile FILE_PATH
 
@@ -24,6 +26,8 @@ node readFile /path/to/input.txt   # Reads file at /path/to/input.txt
 ```
 
 ### writeFile.js
+
+Write utf-8 encoded text to file
 
 ```sh
 node writefile FILE_PATH STRING1 [STRING2] ...
@@ -35,6 +39,8 @@ node writeFile output.txt Hello World # Outputs Hello World to ./output.txt
 
 ### cssSelector.js
 
+Accepts URL and a CSS selector arguments and prints the text content of the element that matches the selector using [axios](https://axios-http.com/) and [cheerio](https://cheerio.js.org/).
+
 ```sh
 node cssSelector.js URL SELECTOR1 [SELECTOR2] [SELECTOR3] ...
 
@@ -44,6 +50,8 @@ node cssSelector.js https://example.com .title .description
 ```
 
 ### githubMostStarred.js
+
+Accepts two dates and prints the most starred GitHub projects in that date range using [axios](https://axios-http.com/) and the [GitHub search API](https://docs.github.com/en/free-pro-team@latest/rest/search/search)
 
 ```sh
 node githubMostStarred.js DATE1 DATE2
