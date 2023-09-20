@@ -35,6 +35,15 @@ node cssSelector.js https://example.com .title .description
 # Returns all elements with className .title and .description returned by http://example.com
 ```
 
+### githubMostStarred.js
+
+```sh
+node githubMostStarred.js [DATE1] [DATE2]
+
+# Example
+node githubMostStarred.js
+```
+
 ## Installation
 
 To install this project locally, follow the following commands (npm required):
