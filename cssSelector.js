@@ -3,7 +3,7 @@ const CLIApp = require("./CLIApp");
 class MyCLIApp extends CLIApp {
   constructor() {
     super();
-    this.expectedArgs = ["URL", "CSS-Selector(s)"];
+    this.expectedArgs = ["URL", "SELECTOR1", "[SELECTOR2] [SELECTOR3] ..."];
   }
 
   parseArgs(args) {

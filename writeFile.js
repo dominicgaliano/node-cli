@@ -3,7 +3,7 @@ const CLIApp = require("./CLIApp");
 class MyCLIApp extends CLIApp {
   constructor() {
     super();
-    this.expectedArgs = ["filepath", "text"];
+    this.expectedArgs = ["FILE_PATH", "STRING1", "[STRING2] ..."];
   }
 
   parseArgs(args) {
