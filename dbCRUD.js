@@ -57,7 +57,6 @@ class MyCLIApp extends CLIApp {
         default:
           throw new Error("Invalid command");
       }
-      console.log("reachable");
       return;
     }
 
