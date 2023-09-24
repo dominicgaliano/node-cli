@@ -10,6 +10,7 @@ const CLIApp = require("./CLIApp");
 
 class MyCLIApp extends CLIApp {
   constructor() {
+    super();
     this.expectedArgs = ["COMMAND", "[id|all|pending|done]"];
   }
 
@@ -35,3 +36,7 @@ class MyCLIApp extends CLIApp {
     );
   }
 }
+
+// Create an instance of your CLI app and run it
+const myApp = new MyCLIApp();
+myApp.run();
