@@ -37,16 +37,16 @@ class MyCLIApp extends CLIApp {
       // run requested command
       switch (this.command) {
         case "create":
-          throw new Error("Not implemented");
+          this.create(this.commandArg);
           break;
         case "read":
-          throw new Error("Not implemented");
+          this.read(this.commandArg);
           break;
         case "update":
-          throw new Error("Not implemented");
+          this.update(this.commandArg);
           break;
         case "delete":
-          throw new Error("Not implemented");
+          this.delete(this.commandArg);
           break;
         case "help":
           throw new Error();
@@ -62,6 +62,22 @@ class MyCLIApp extends CLIApp {
 
     // invalid command
     throw new Error();
+  }
+
+  create(arg) {
+    throw new Error("Not implemented");
+  }
+
+  read(arg) {
+    throw new Error("Not implemented");
+  }
+
+  update(arg) {
+    throw new Error("Not implemented");
+  }
+
+  delete(arg) {
+    throw new Error("Not implemented");
   }
 
   displayHelp() {
