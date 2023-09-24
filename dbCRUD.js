@@ -11,7 +11,7 @@ const CLIApp = require("./CLIApp");
 class MyCLIApp extends CLIApp {
   constructor() {
     super();
-    this.expectedArgs = ["COMMAND", "[id|all|pending|done]"];
+    this.expectedArgs = ["COMMAND", "[id|all|pending|done|note_text]"];
     this.version = "v0.0.0";
     this.validCommands = {
       "--new": "create",
@@ -28,6 +28,7 @@ class MyCLIApp extends CLIApp {
     // check if correct number of args were passed
     if (args.length >= 1) {
       this.command = this.validCommands[args[0]];
+      this.commandArg = args[1];
     }
   }
 
@@ -37,20 +38,26 @@ class MyCLIApp extends CLIApp {
       switch (this.command) {
         case "create":
           throw new Error("Not implemented");
+          break;
         case "read":
           throw new Error("Not implemented");
+          break;
         case "update":
           throw new Error("Not implemented");
+          break;
         case "delete":
           throw new Error("Not implemented");
+          break;
         case "help":
-          throw new Error("Not implemented");
+          throw new Error();
+          break;
         case "version":
           console.log(this.version);
+          break;
         default:
           throw new Error("Invalid command");
       }
-
+      console.log("reachable");
       return;
     }
 
