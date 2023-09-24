@@ -12,21 +12,51 @@ class MyCLIApp extends CLIApp {
   constructor() {
     super();
     this.expectedArgs = ["COMMAND", "[id|all|pending|done]"];
+    this.version = "v0.0.0";
+    this.validCommands = {
+      "--new": "create",
+      "--list": "read",
+      "--done": "update",
+      "--delete": "delete",
+      "--help": "help",
+      "-h": "help",
+      "--version": "version",
+    };
   }
 
   parseArgs(args) {
-    // check if help was requested
-    if (args[0] === "-h" || args[0] === "--help") {
-      throw new Error();
-    }
-
     // check if correct number of args were passed
     if (args.length >= 1) {
-      this.command = args[0];
+      this.command = this.validCommands[args[0]];
     }
   }
 
-  async execute() {}
+  async execute() {
+    if (this.command) {
+      // run requested command
+      switch (this.command) {
+        case "create":
+          throw new Error("Not implemented");
+        case "read":
+          throw new Error("Not implemented");
+        case "update":
+          throw new Error("Not implemented");
+        case "delete":
+          throw new Error("Not implemented");
+        case "help":
+          throw new Error("Not implemented");
+        case "version":
+          console.log(this.version);
+        default:
+          throw new Error("Invalid command");
+      }
+
+      return;
+    }
+
+    // invalid command
+    throw new Error();
+  }
 
   displayHelp() {
     super.displayHelp();
