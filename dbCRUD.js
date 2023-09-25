@@ -61,8 +61,8 @@ class MyCLIApp extends CLIApp {
       throw new Error("Two arguments expected");
     }
 
+    // connect to postgreSQL db
     const Client = require("pg").Client;
-
     const client = new Client({
       host: process.env.HOST,
       port: process.env.PORT,
@@ -72,8 +72,8 @@ class MyCLIApp extends CLIApp {
     });
     await client.connect();
 
+    // build query string
     let QUERY_STRING;
-
     switch (actionType) {
       case "create":
         QUERY_STRING = "";
@@ -91,6 +91,7 @@ class MyCLIApp extends CLIApp {
         throw new Error("internal error: invalid action type");
     }
 
+    // query db
     let res;
     try {
       res = await client.query(QUERY_STRING);
