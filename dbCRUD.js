@@ -49,6 +49,10 @@ class MyCLIApp extends CLIApp {
       default:
         data = await this.performDatabaseAction(this.command, this.commandArg);
     }
+
+    // display result
+    // temp
+    console.log(data);
   }
 
   async performDatabaseAction(actionType, commandArg) {
