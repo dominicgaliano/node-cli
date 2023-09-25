@@ -200,16 +200,16 @@ class MyCLIApp extends CLIApp {
 
     switch (this.command) {
       case "create":
-        // TODO: implement
+        console.log("Created!");
         break;
       case "read":
         console.log(res.rows);
         break;
       case "update":
-        // TODO: implement
+        console.log("Updated!");
         break;
       case "delete":
-        // TODO: implement
+        console.log("Deleted");
         break;
       default:
         throw new Error("internal error: invalid action type ");
