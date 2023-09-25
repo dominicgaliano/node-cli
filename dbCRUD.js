@@ -48,7 +48,7 @@ class MyCLIApp extends CLIApp {
         return;
       default:
         // validate 2 args passed
-        if (!commandArg) {
+        if (!this.commandArg) {
           throw new Error("Two arguments expected");
         }
 
@@ -61,7 +61,7 @@ class MyCLIApp extends CLIApp {
     console.log(data);
   }
 
-  async performDatabaseAction(actionType, commandArg) {
+  async performDatabaseAction(actionType, actionBody) {
     // connect to postgreSQL db
     const Client = require("pg").Client;
     const client = new Client({
@@ -77,7 +77,7 @@ class MyCLIApp extends CLIApp {
     let QUERY_STRING;
     switch (actionType) {
       case "create":
-        QUERY_STRING = `INSERT INTO test_table (task_description) VALUES ('take out the trash');`;
+        QUERY_STRING = `INSERT INTO test_table (task_description) VALUES ('${actionBody}');`;
         break;
       case "read":
         QUERY_STRING = `SELECT task_description FROM tasks`;
