@@ -26,44 +26,29 @@ class MyCLIApp extends CLIApp {
   }
 
   parseArgs(args) {
-    // check if correct number of args were passed
-    if (args.length >= 1) {
-      this.command = this.validCommands[args[0]];
-      this.commandArg = args[1];
+    this.command = this.validCommands[args[0]];
+    this.commandArg = args[1];
+
+    // verify at least one valid command passed
+    if (!this.command) {
+      throw new Error();
     }
   }
 
   async execute() {
     let data;
 
-    if (this.command) {
-      // run requested command
-      switch (this.command) {
-        case "help":
-          throw new Error();
-          break;
-        case "version":
-          console.log(this.version);
-          break;
-        case "create":
-          data = await this.performDatabaseAction("create", this.commandArg);
-          break;
-        case "read":
-          data = await this.performDatabaseAction("read", this.commandArg);
-          break;
-        case "update":
-          data = await this.performDatabaseAction("update", this.commandArg);
-          break;
-        case "delete":
-          data = await this.performDatabaseAction("delete", this.commandArg);
-          break;
-
-        default:
-          throw new Error("Invalid command");
-      }
-      return;
+    // run requested command
+    switch (this.command) {
+      case "help":
+        this.displayHelp();
+        return;
+      case "version":
+        console.log(this.version);
+        return;
+      default:
+        data = await this.performDatabaseAction(this.command, this.commandArg);
     }
-    throw new Error("Invalid command");
   }
 
   async performDatabaseAction(actionType, commandArg) {
