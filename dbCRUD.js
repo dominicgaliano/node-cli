@@ -1,3 +1,4 @@
+require("dotenv").config();
 const CLIApp = require("./CLIApp");
 
 // desired functionality
@@ -33,6 +34,8 @@ class MyCLIApp extends CLIApp {
   }
 
   async execute() {
+    let data;
+
     if (this.command) {
       // run requested command
       switch (this.command) {
@@ -43,16 +46,16 @@ class MyCLIApp extends CLIApp {
           console.log(this.version);
           break;
         case "create":
-          this.create(this.commandArg);
+          data = await this.performDatabaseAction("create", this.commandArg);
           break;
         case "read":
-          this.read(this.commandArg);
+          data = await this.performDatabaseAction("read", this.commandArg);
           break;
         case "update":
-          this.update(this.commandArg);
+          data = await this.performDatabaseAction("update", this.commandArg);
           break;
         case "delete":
-          this.delete(this.commandArg);
+          data = await this.performDatabaseAction("delete", this.commandArg);
           break;
 
         default:
@@ -60,25 +63,55 @@ class MyCLIApp extends CLIApp {
       }
       return;
     }
-
-    // invalid command
-    throw new Error();
+    throw new Error("Invalid command");
   }
 
-  create(arg) {
-    throw new Error("Not implemented");
-  }
+  async performDatabaseAction(actionType, commandArg) {
+    // validate input
+    if (!commandArg) {
+      throw new Error("Two arguments expected");
+    }
 
-  read(arg) {
-    throw new Error("Not implemented");
-  }
+    const Client = require("pg").Client;
 
-  update(arg) {
-    throw new Error("Not implemented");
-  }
+    const client = new Client({
+      host: process.env.HOST,
+      port: process.env.PORT,
+      database: process.env.DATABASE_NAME,
+      user: process.env.USER_ID,
+      password: process.env.USER_KEY,
+    });
+    await client.connect();
 
-  delete(arg) {
-    throw new Error("Not implemented");
+    let QUERY_STRING;
+
+    switch (actionType) {
+      case "create":
+        QUERY_STRING = "";
+        break;
+      case "read":
+        QUERY_STRING = "SELECT * FROM film";
+        break;
+      case "update":
+        QUERY_STRING = "";
+        break;
+      case "delete":
+        QUERY_STRING = "";
+        break;
+      default:
+        throw new Error("internal error: invalid action type");
+    }
+
+    let res;
+    try {
+      res = await client.query(QUERY_STRING);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.end();
+    }
+
+    return res;
   }
 
   displayHelp() {
