@@ -82,8 +82,8 @@ Database Schema:
 | Column | Type | Description |
 | ------ | ------------ | ----------------------- |
 | task_id (PK) | SERIAL | Unique task identifier |
-| task | VARCHAR(255) | Description of the task |
-| status | VARCHAR(7) | Current task status |
+| task_description | VARCHAR(255) | Description of the task |
+| complete | BOOLEAN | True if task complete |
 PK = Primary Key
 
 ## Installation

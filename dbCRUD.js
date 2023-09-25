@@ -73,6 +73,7 @@ class MyCLIApp extends CLIApp {
     await client.connect();
 
     // create table if it does not exist already
+    await this.createTable(client);
 
     // build query string
     let QUERY_STRING;
@@ -81,7 +82,7 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = "";
         break;
       case "read":
-        QUERY_STRING = "SELECT * FROM film";
+        QUERY_STRING = "SELECT * FROM tasks";
         break;
       case "update":
         QUERY_STRING = "";
@@ -107,14 +108,17 @@ class MyCLIApp extends CLIApp {
   }
 
   async createTable(client) {
+    let res;
     try {
-      await client.query(`CREATE TABLE IF NOT EXISTS tasks (
+      res = await client.query(`CREATE TABLE IF NOT EXISTS test_table1 (
         task_id SERIAL PRIMARY KEY,
-        task VARCHAR(255) NOT NULL,
-        status VARCHAR(7) NOT NULL
+	      task_description VARCHAR(255) NOT NULL,
+	      complete BOOLEAN NOT NULL DEFAULT false
       );`);
     } catch (err) {
       throw new Error(err);
+    } finally {
+      console.log(res);
     }
   }
 
