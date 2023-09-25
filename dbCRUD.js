@@ -73,40 +73,18 @@ class MyCLIApp extends CLIApp {
     });
     await client.connect();
 
-    // build query string
-    let QUERY_STRING;
-    switch (actionType) {
-      case "create":
-        QUERY_STRING = `INSERT INTO tasks (task_description) VALUES ('${actionBody}');`;
-        break;
-      case "read":
-        let filterString = "";
-        if (actionBody === "pending") {
-          filterString = "WHERE NOT complete";
-        } else if (actionBody === "done") {
-          filterString = "WHERE complete";
-        }
-
-        QUERY_STRING = `SELECT task_description FROM tasks ${filterString};`;
-        break;
-      case "update":
-        QUERY_STRING = "";
-        break;
-      case "delete":
-        QUERY_STRING = "";
-        break;
-      default:
-        throw new Error("internal error: invalid action type");
-    }
-
-    // query db
     let res;
     try {
       // verify table
       await this.verifyTable(client);
+
+      // build query string
+      const QUERY_STRING = this.buildQueryString(actionType, actionBody);
+
+      // query db
       res = await client.query(QUERY_STRING);
     } catch (err) {
-      console.log(err);
+      throw new Error(err);
     } finally {
       await client.end();
     }
@@ -174,6 +152,49 @@ class MyCLIApp extends CLIApp {
       complete BOOLEAN NOT NULL DEFAULT false);`;
 
     await client.query(createTableQuery);
+  }
+
+  buildQueryString(actionType, actionBody) {
+    // build query string
+    let QUERY_STRING;
+    switch (actionType) {
+      case "create":
+        QUERY_STRING = `INSERT INTO tasks (task_description) VALUES ('${actionBody}');`;
+        break;
+      case "read":
+        let filterString = "";
+        switch (actionBody) {
+          case "pending":
+            filterString = "WHERE NOT complete";
+            break;
+          case "done":
+            filterString = "WHERE complete";
+            break;
+          case "all":
+            break;
+          default:
+            throw new Error("invalid filter");
+        }
+
+        if (actionBody === "pending") {
+          filterString = "WHERE NOT complete";
+        } else if (actionBody === "done") {
+          filterString = "WHERE complete";
+        }
+
+        QUERY_STRING = `SELECT task_description FROM tasks ${filterString};`;
+        break;
+      case "update":
+        QUERY_STRING = "";
+        break;
+      case "delete":
+        QUERY_STRING = "";
+        break;
+      default:
+        throw new Error("internal error: invalid action type");
+    }
+
+    return QUERY_STRING;
   }
 
   displayHelp() {
