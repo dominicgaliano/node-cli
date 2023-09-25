@@ -36,7 +36,7 @@ class MyCLIApp extends CLIApp {
   }
 
   async execute() {
-    let data;
+    let res;
 
     // run requested command
     switch (this.command) {
@@ -53,12 +53,10 @@ class MyCLIApp extends CLIApp {
         }
 
         // perform db action
-        data = await this.performDatabaseAction(this.command, this.commandArg);
+        res = await this.performDatabaseAction(this.command, this.commandArg);
     }
 
-    // display result
-    // temp
-    console.log(data);
+    this.describeResult(data);
   }
 
   async performDatabaseAction(actionType, actionBody) {
@@ -196,6 +194,10 @@ class MyCLIApp extends CLIApp {
     }
 
     return QUERY_STRING;
+  }
+
+  describeResult(res) {
+    console.log(res);
   }
 
   displayHelp() {
