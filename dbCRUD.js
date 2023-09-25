@@ -196,8 +196,6 @@ class MyCLIApp extends CLIApp {
   }
 
   describeResult(res) {
-    console.log(res);
-
     switch (this.command) {
       case "create":
         console.log("Created!");
