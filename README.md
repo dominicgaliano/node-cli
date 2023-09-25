@@ -78,6 +78,13 @@ node dbCrud.js COMMAND, [id|all|pending|done|"note_text"]
 node
 ```
 
+Database Schema:
+| Column | Type | Description |
+| ------ | ------------ | ----------------------- |
+| id (PK) | INT | Unique task identifier |
+| task | VARCHAR(255) | Description of the task |
+| status | VARCHAR(7) | Current task status |
+
 ## Installation
 
 To install this project locally, follow the following commands (npm required):
