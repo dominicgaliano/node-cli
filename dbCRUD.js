@@ -80,7 +80,14 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = `INSERT INTO test_table (task_description) VALUES ('${actionBody}');`;
         break;
       case "read":
-        QUERY_STRING = `SELECT task_description FROM tasks`;
+        let filterString = "";
+        if (actionBody === "pending") {
+          filterString = "WHERE NOT complete";
+        } else if (actionBody === "done") {
+          filterString = "WHERE complete";
+        }
+
+        QUERY_STRING = `SELECT task_description FROM tasks ${filterString};`;
         break;
       case "update":
         QUERY_STRING = "";
