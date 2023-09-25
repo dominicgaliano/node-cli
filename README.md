@@ -81,7 +81,7 @@ node
 Database Schema:
 | Column | Type | Description |
 | ------ | ------------ | ----------------------- |
-| id (PK) | INT | Unique task identifier |
+| task_id (PK) | SERIAL | Unique task identifier |
 | task | VARCHAR(255) | Description of the task |
 | status | VARCHAR(7) | Current task status |
 PK = Primary Key

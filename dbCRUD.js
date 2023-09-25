@@ -108,7 +108,7 @@ class MyCLIApp extends CLIApp {
 
   async createTable(client) {
     try {
-      await client.query(`CREATE TABLE IF NOT EXISTS test_table (
+      await client.query(`CREATE TABLE IF NOT EXISTS tasks (
         task_id SERIAL PRIMARY KEY,
         task VARCHAR(255) NOT NULL,
         status VARCHAR(7) NOT NULL
