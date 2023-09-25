@@ -182,7 +182,7 @@ class MyCLIApp extends CLIApp {
           filterString = "WHERE complete";
         }
 
-        QUERY_STRING = `SELECT task_description FROM tasks ${filterString};`;
+        QUERY_STRING = `SELECT * FROM tasks ${filterString};`;
         break;
       case "update":
         QUERY_STRING = "";
