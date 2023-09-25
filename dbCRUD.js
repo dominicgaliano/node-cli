@@ -188,7 +188,7 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = "";
         break;
       case "delete":
-        QUERY_STRING = "";
+        QUERY_STRING = `DELETE FROM tasks WHERE task_id=${actionBody};`;
         break;
       default:
         throw new Error("internal error: invalid action type");
