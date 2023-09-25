@@ -185,7 +185,8 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = `SELECT * FROM tasks ${filterString};`;
         break;
       case "update":
-        QUERY_STRING = "";
+        QUERY_STRING =
+          "UPDATE tasks SET complete = true WHERE task_id=${actionBody};";
         break;
       case "delete":
         QUERY_STRING = `DELETE FROM tasks WHERE task_id=${actionBody};`;
