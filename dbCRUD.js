@@ -72,9 +72,6 @@ class MyCLIApp extends CLIApp {
     });
     await client.connect();
 
-    // verifies table
-    await this.verifyTable(client);
-
     // build query string
     let QUERY_STRING;
     switch (actionType) {
@@ -97,6 +94,8 @@ class MyCLIApp extends CLIApp {
     // query db
     let res;
     try {
+      // verify table
+      await this.verifyTable(client);
       res = await client.query(QUERY_STRING);
     } catch (err) {
       console.log(err);
@@ -108,42 +107,64 @@ class MyCLIApp extends CLIApp {
   }
 
   async verifyTable(client) {
+    // check if table exists
+    if (this.tableExists(client)) {
+      // check if table follows desired schema
+      if (!this.tableSchemaValid(client)) {
+        this.createTable(client);
+      }
+    } else {
+      // create table
+      this.createTable(client);
+    }
+  }
+
+  async tableExists(client) {
     // check if table exists on db
     const tableExistsQuery = `
-      SELECT EXISTS (
-        SELECT 1
-        FROM information_schema.tables
-        WHERE table_name = 'tasks'
-      );
-    `;
+    SELECT EXISTS (
+    SELECT 1
+    FROM information_schema.tables
+    WHERE table_name = 'tasks');`;
+
     const result = await client.query(tableExistsQuery);
+    return result.rows[0].exists;
+  }
 
-    // create table if it does not exist
-    if (!result.rows[0].exists) {
-      // Create the "tasks" table with the desired schema
-      const createTableQuery = `
-        CREATE TABLE tasks (
-          task_id SERIAL PRIMARY KEY,
-          task VARCHAR(255) NOT NULL,
-          complete BOOLEAN NOT NULL DEFAULT false
-        );
-      `;
-      await client.query(createTableQuery);
-      console.log('Created the "tasks" table.');
-    }
+  async tableSchemaValid(client) {
+    const getTableSchemaQuery = `
+    SELECT column_name, data_type
+    FROM information_schema.columns
+    WHERE table_name = 'tasks'
+    ORDER BY column_name;`;
 
-    let res;
-    try {
-      res = await client.query(`CREATE TABLE IF NOT EXISTS tasks (
-        task_id SERIAL PRIMARY KEY,
-	      task_description VARCHAR(255) NOT NULL,
-	      complete BOOLEAN NOT NULL DEFAULT false
-      );`);
-    } catch (err) {
-      throw new Error(err);
-    } finally {
-      console.log(res);
+    const result = await client.query(getTableSchemaQuery);
+
+    // Check if the schema matches desired schema
+    if (
+      result.rows.length === 3 && // Check the number of columns
+      result.rows[0].column_name === "complete" &&
+      result.rows[0].data_type === "boolean" &&
+      result.rows[1].column_name === "task_description" &&
+      result.rows[1].data_type === "character varying" &&
+      result.rows[2].column_name === "task_id" &&
+      result.rows[2].data_type === "integer"
+    ) {
+      return true;
     }
+    return false;
+  }
+
+  async createTable(client) {
+    // Create the "tasks" table with the desired schema
+    const createTableQuery = `
+      CREATE TABLE tasks (
+      task_id SERIAL PRIMARY KEY,
+      task VARCHAR(255) NOT NULL,
+      complete BOOLEAN NOT NULL DEFAULT false);`;
+
+    await client.query(createTableQuery);
+    console.log('Created the "tasks" table.');
   }
 
   displayHelp() {
