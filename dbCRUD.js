@@ -72,6 +72,8 @@ class MyCLIApp extends CLIApp {
     });
     await client.connect();
 
+    // create table if it does not exist already
+
     // build query string
     let QUERY_STRING;
     switch (actionType) {
@@ -104,11 +106,27 @@ class MyCLIApp extends CLIApp {
     return res;
   }
 
+  async createTable(client) {
+    try {
+      await client.query(`CREATE TABLE IF NOT EXISTS test_table (
+        task_id SERIAL PRIMARY KEY,
+        task VARCHAR(255) NOT NULL,
+        status VARCHAR(7) NOT NULL
+      );`);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
   displayHelp() {
     super.displayHelp();
 
     console.log(
-      "\n--new to add a new todo item\n--list [all|pending|done] to list the todo items\n--done [id] to update a todo item\n--delete [id] to delete a todo item\n--help to list all the available options\n--version to print the version of the application"
+      `--new to add a new todo item
+--list [all|pending|done] to list the todo items
+--done [id] to update a todo item--delete [id] to delete a todo item
+--help to list all the available options
+--version to print the version of the application`
     );
   }
 }
