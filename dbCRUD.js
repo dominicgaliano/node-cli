@@ -116,14 +116,14 @@ class MyCLIApp extends CLIApp {
 
   async verifyTable(client) {
     // check if table exists
-    if (this.tableExists(client)) {
+    if (await this.tableExists(client)) {
       // check if table follows desired schema
-      if (!this.tableSchemaValid(client)) {
-        this.createTable(client);
+      if (await !this.tableSchemaValid(client)) {
+        await this.createTable(client);
       }
     } else {
       // create table
-      this.createTable(client);
+      await this.createTable(client);
     }
   }
 
@@ -166,13 +166,14 @@ class MyCLIApp extends CLIApp {
   async createTable(client) {
     // Create the "tasks" table with the desired schema
     const createTableQuery = `
+      DROP TABLE IF EXISTS tasks;
+    
       CREATE TABLE tasks (
       task_id SERIAL PRIMARY KEY,
-      task VARCHAR(255) NOT NULL,
+      task_description VARCHAR(255) NOT NULL,
       complete BOOLEAN NOT NULL DEFAULT false);`;
 
     await client.query(createTableQuery);
-    console.log('Created the "tasks" table.');
   }
 
   displayHelp() {
