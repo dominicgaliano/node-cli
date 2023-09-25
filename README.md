@@ -67,6 +67,17 @@ node githubMostStarred.js 2023-09-01 2023-10-19
 # ...
 ```
 
+### dbCRUD.js
+
+Simple CRUD cli component using PostgreSQL.
+
+```sh
+node dbCrud.js COMMAND, [id|all|pending|done|"note_text"]
+
+# Example
+node
+```
+
 ## Installation
 
 To install this project locally, follow the following commands (npm required):

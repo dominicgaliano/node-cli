@@ -36,6 +36,12 @@ class MyCLIApp extends CLIApp {
     if (this.command) {
       // run requested command
       switch (this.command) {
+        case "help":
+          throw new Error();
+          break;
+        case "version":
+          console.log(this.version);
+          break;
         case "create":
           this.create(this.commandArg);
           break;
@@ -48,12 +54,7 @@ class MyCLIApp extends CLIApp {
         case "delete":
           this.delete(this.commandArg);
           break;
-        case "help":
-          throw new Error();
-          break;
-        case "version":
-          console.log(this.version);
-          break;
+
         default:
           throw new Error("Invalid command");
       }
