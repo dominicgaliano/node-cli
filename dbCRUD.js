@@ -80,7 +80,7 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = `INSERT INTO test_table (task_description) VALUES ('take out the trash');`;
         break;
       case "read":
-        QUERY_STRING = `SELECT task_description FROM tasks WHERE (complete == ${})`;
+        QUERY_STRING = `SELECT task_description FROM tasks`;
         break;
       case "update":
         QUERY_STRING = "";
