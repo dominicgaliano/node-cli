@@ -56,7 +56,7 @@ class MyCLIApp extends CLIApp {
         res = await this.performDatabaseAction(this.command, this.commandArg);
     }
 
-    this.describeResult(data);
+    this.describeResult(res);
   }
 
   async performDatabaseAction(actionType, actionBody) {
@@ -197,7 +197,22 @@ class MyCLIApp extends CLIApp {
   }
 
   describeResult(res) {
-    console.log(res);
+    switch (this.command) {
+      case "create":
+        // TODO: implement
+        break;
+      case "read":
+        // TODO: implement
+        break;
+      case "update":
+        // TODO: implement
+        break;
+      case "delete":
+        // TODO: implement
+        break;
+      default:
+        throw new Error("internal error: invalid action type ");
+    }
   }
 
   displayHelp() {
