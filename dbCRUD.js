@@ -72,8 +72,8 @@ class MyCLIApp extends CLIApp {
     });
     await client.connect();
 
-    // create table if it does not exist already
-    await this.createTable(client);
+    // verifies table
+    await this.verifyTable(client);
 
     // build query string
     let QUERY_STRING;
@@ -107,10 +107,34 @@ class MyCLIApp extends CLIApp {
     return res;
   }
 
-  async createTable(client) {
+  async verifyTable(client) {
+    // check if table exists on db
+    const tableExistsQuery = `
+      SELECT EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_name = 'tasks'
+      );
+    `;
+    const result = await client.query(tableExistsQuery);
+
+    // create table if it does not exist
+    if (!result.rows[0].exists) {
+      // Create the "tasks" table with the desired schema
+      const createTableQuery = `
+        CREATE TABLE tasks (
+          task_id SERIAL PRIMARY KEY,
+          task VARCHAR(255) NOT NULL,
+          complete BOOLEAN NOT NULL DEFAULT false
+        );
+      `;
+      await client.query(createTableQuery);
+      console.log('Created the "tasks" table.');
+    }
+
     let res;
     try {
-      res = await client.query(`CREATE TABLE IF NOT EXISTS test_table1 (
+      res = await client.query(`CREATE TABLE IF NOT EXISTS tasks (
         task_id SERIAL PRIMARY KEY,
 	      task_description VARCHAR(255) NOT NULL,
 	      complete BOOLEAN NOT NULL DEFAULT false
