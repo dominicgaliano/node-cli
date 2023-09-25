@@ -69,13 +69,30 @@ node githubMostStarred.js 2023-09-01 2023-10-19
 
 ### dbCRUD.js
 
-Simple CRUD cli component using PostgreSQL.
+Simple CRUD CLI component using [PostgreSQL](https://www.postgresql.org/) and [node-postgres](https://node-postgres.com/).
 
 ```sh
 node dbCrud.js COMMAND, [id|all|pending|done|"note_text"]
 
 # Example
-node
+node dbCRUD.js --new 'get groceries'
+# Output:
+# Created!
+
+node dbCRUD.js --list all
+# Output:
+# [
+#   {
+#     task_id: 2,
+#     task_description: 'clean up the house',
+#     complete: true
+#   },
+#   {
+#     task_id: 4,
+#     task_description: 'get groceries',
+#     complete: false
+#   }
+#]
 ```
 
 Database Schema:
@@ -95,6 +112,18 @@ git clone https://github.com/dominicgaliano/node-cli.git
 cd node-cli/
 npm i
 ```
+
+To use the CRUD CLI, you will need to have a running postgreSQL database. You will also need to create .env file in the project directory with the following parameters defined:
+
+```.env
+HOST=
+PORT=
+DATABASE_NAME=
+USER_ID=
+USER_KEY=
+```
+
+**Warning!** The CRUD CLI will overwrite any existing table named 'tasks'.
 
 ## License
 
