@@ -77,7 +77,7 @@ class MyCLIApp extends CLIApp {
     let QUERY_STRING;
     switch (actionType) {
       case "create":
-        QUERY_STRING = `INSERT INTO test_table (task_description) VALUES ('${actionBody}');`;
+        QUERY_STRING = `INSERT INTO tasks (task_description) VALUES ('${actionBody}');`;
         break;
       case "read":
         let filterString = "";
