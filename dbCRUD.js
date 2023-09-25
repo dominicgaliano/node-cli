@@ -183,8 +183,7 @@ class MyCLIApp extends CLIApp {
         QUERY_STRING = `SELECT * FROM tasks ${filterString};`;
         break;
       case "update":
-        QUERY_STRING =
-          "UPDATE tasks SET complete = true WHERE task_id=${actionBody};";
+        QUERY_STRING = `UPDATE tasks SET complete = true WHERE task_id=${actionBody};`;
         break;
       case "delete":
         QUERY_STRING = `DELETE FROM tasks WHERE task_id=${actionBody};`;
@@ -197,12 +196,14 @@ class MyCLIApp extends CLIApp {
   }
 
   describeResult(res) {
+    console.log(res);
+
     switch (this.command) {
       case "create":
         // TODO: implement
         break;
       case "read":
-        // TODO: implement
+        console.log(res.rows);
         break;
       case "update":
         // TODO: implement
