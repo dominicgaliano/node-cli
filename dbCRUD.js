@@ -75,11 +75,11 @@ class MyCLIApp extends CLIApp {
 
     let res;
     try {
-      // verify table
-      await this.verifyTable(client);
-
       // build query string
       const QUERY_STRING = this.buildQueryString(actionType, actionBody);
+
+      // verify table
+      await this.verifyTable(client);
 
       // query db
       res = await client.query(QUERY_STRING);
